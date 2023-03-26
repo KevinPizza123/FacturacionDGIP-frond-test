@@ -1,0 +1,130 @@
+<!-- <div class="centrado" >
+
+  <p-card [style]="{'width': '70rem', 'margin-bottom': '2em'}">
+      <p-toolbar styleClass="mb-4 gap-5">
+          <form id="form">
+              <div class="col-lg-4 col-md-12 col-12">
+                  <div class="input-group mb-4">
+                      <input pInputText type="text" (input)="dtc.filterGlobal(getEventValue($event), 'contains')"
+                          placeholder="Buscar cualquier campo">
+                      <button pButton type="submit" icon="pi pi-search" class="input-group-text"></button>
+                  </div>
+              </div>
+          </form>
+      </p-toolbar>
+
+
+
+      <p-table #dtc [value]="consumidor" [rows]="4" [paginator]="true" [rowsPerPageOptions]="[4,8,12]"
+          [globalFilterFields]="['cosumidor.idTipoConsumidor','idTipoConsumidor','nombreTconsumidor ','descTconsumidor','estadoTconsumidor','fechaTconsumidor','idUsuarioTconsumidor']"
+          [rowHover]="true" dataKey="id"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas."
+          [showCurrentPageReport]="true">
+
+
+          <ng-template pTemplate="header">
+
+
+              <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Fecha</th>
+      <th>ID Usuario</th>
+              </tr>
+              <tr>
+                  <th><p-columnFilter type="text" field="item.idTipoConsumidor"></p-columnFilter></th>
+                  <th><p-columnFilter type="text" field="nombreTconsumidor"></p-columnFilter></th>
+                  <th><p-columnFilter type="text" field="descTconsumidor"></p-columnFilter></th>
+                  <th><p-columnFilter type="text" field="estadoTconsumidor"></p-columnFilter></th>
+                  <th><p-columnFilter type="text" field="fechaTconsumidor"></p-columnFilter></th>
+                  <th><p-columnFilter type="text" field="idUsuarioTconsumidor"></p-columnFilter></th>
+                  <th></th>
+                  <th></th>
+              </tr>
+          </ng-template>
+
+
+          <ng-template pTemplate="body" let-consumidor>
+              <tr class="tablas">
+                <td>{{ consumidor.idTipoConsumidor }}</td>
+                <td>{{ consumidor.nombreTconsumidor }}</td>
+                <td>{{ consumidor.descTconsumidor}}</td>
+                <td> {{ consumidor.estadoTconsumidor }}</td>
+                <td> {{ consumidor.fechaTconsumidor}}</td>
+                <td>{{ consumidor.idUsuarioTconsumidor}}</td>
+                  <td>
+                      <button pButton pRipple icon="pi pi-pencil"
+                          class="p-button-rounded p-button-success p-mr-2"></button>
+                  </td>
+                  <td>
+                      <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+                  </td>
+
+              </tr>
+          </ng-template>
+
+          <ng-template pTemplate="summary">
+              <div class="p-d-flex p-ai-center p-jc-between">
+                  En total hay {{consumidor ? consumidor.length : 0 }} entradas.
+              </div>
+          </ng-template>
+      </p-table>
+  </p-card>
+</div> -->
+
+<!--* TABLA DE DATOS -->
+<div class="container card scalein animation-duration-1000">
+  <h2>REGISTROS</h2>
+  <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="listado" dataKey="id" [rows]="4"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
+    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
+    [globalFilterFields]="['idTipoConsumidor','nombreTconsumidor','descTconsumidor','estadoTconsumidor','idUsuarioTconsumidor','fechaTconsumidor']"
+    [tableStyle]="{ 'min-width': '75rem' }">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between">
+        <span class="p-input-icon-left mb-2 md:mb-0">
+          <i class="pi pi-search"></i>
+          <input pInputText type="search" (input)="dtc2.filterGlobal(getEventValue($event),'contains')"
+            placeholder="Buscar" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción
+          <p-columnFilter type="text" field="descTconsumidor" display="menu"></p-columnFilter>
+        </th>
+        <th>Estado
+          <p-columnFilter type="text" field="estadoTconsumidor" display="menu"></p-columnFilter>
+        </th>
+        <th>Fecha
+          <p-columnFilter type="date" field="fechaTconsumidor | date" display="menu"></p-columnFilter>
+        </th>
+        <th>ID Usuario</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-consumidor let-rowIndex="rowIndex">
+
+      <tr>
+        <td>{{ consumidor.idTipoConsumidor }}
+        </td>
+        <td>{{ consumidor.nombreTconsumidor }}</td>
+        <td>{{ consumidor.descTconsumidor }}</td>
+        <td>{{ consumidor.estadoTconsumidor }}</td>
+        <td>{{ consumidor.fechaTconsumidor | date:'short'}}</td>
+        <td>{{ consumidor.idUsuarioTconsumidor }}</td>
+        <button (click)="eliminarTipoConsumidor(consumidor.idTipoConsumidor)">Eliminar</button>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No se han encontrado resultados</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

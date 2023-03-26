@@ -1,0 +1,57 @@
+<div class="container card scalein animation-duration-1000">
+    <h2>REGISTROS</h2>
+    <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="formapago" dataKey="id" [rows]="10"
+      [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
+      currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
+      [globalFilterFields]="['idFormaPago','nombreFp','codigoSri','activo','codigoSae','descripcionFp','fechaFp','idUsuarioFp']"
+      [tableStyle]="{ 'min-width': '75rem' }">
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between">
+          <span class="p-input-icon-left mb-2 md:mb-0">
+            <i class="pi pi-search"></i>
+            <input pInputText type="search" (input)="dtc2.filterGlobal(getEventValue($event),'contains')"
+              placeholder="Buscar" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>CodigoSri</th>
+          <th>Estado
+            <p-columnFilter type="text" field="estadoTconsumidor" display="menu"></p-columnFilter>
+          </th>
+          <th>CodigoSae</th>
+          <th>Descripción
+            <p-columnFilter type="text" field="descTconsumidor" display="menu"></p-columnFilter>
+          </th>
+          <th>Fecha
+            <p-columnFilter type="text" field="fechaTconsumidor" display="menu"></p-columnFilter>
+          </th>
+          <th>ID Usuario</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-pago let-rowIndex="rowIndex">
+  
+        <tr>
+          <td>{{ pago.idFormaPago}}</td>
+          <td>{{ pago.nombreFp }}</td>
+          <td>{{ pago.codigoSri }}</td>
+          <td>{{ pago.activo }}</td>
+          <td>{{ pago.codigoSae }}</td>
+          <td>{{ pago.descripcionFp }}</td>
+          <td>
+            {{ pago.fechaFp | date:'short' }}
+          </td>
+          <td>{{ pago.idUsuarioFp }}</td>
+        </tr>
+        <button (click)="eliminarFormaPago(pago.idFormaPago)">Eliminar</button>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">No se han encontrado resultados</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
