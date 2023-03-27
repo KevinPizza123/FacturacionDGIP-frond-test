@@ -10,7 +10,7 @@ import { ListadoDTO } from '../Dto/TipoConsumidor.dto';
   providedIn: 'root',
 })
 export class TipoconsumidorService {
-  private apiUrl = 'http://localhost:8080/Cosumidor/listaConsumidor';
+  private apiUrl = 'http://localhost:8080/Cosumidor';
 
   constructor(private http: HttpClient) {}
 
@@ -26,5 +26,8 @@ export class TipoconsumidorService {
     );
   }
   
+  createTipoConsumidor(tipoConsumidor: TipoConsumidorModel): Observable<any>{
+    return this.http.post(`${this.apiUrl}/guardaConsumidor`, tipoConsumidor);
+  }
 
 }

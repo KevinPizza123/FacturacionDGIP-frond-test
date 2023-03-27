@@ -1,5 +1,3 @@
-
-
 <!-- <div class="centrado">
   <p-card [style]="{ width: '70rem', 'margin-bottom': '2em' }">
     <p-toolbar styleClass="mb-4 gap-5">
@@ -190,20 +188,19 @@
 
 
 
+
 <div class="container card scalein animation-duration-1000">
   <h2>BANCOS</h2>
-  <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="Banco" dataKey="id" [rows]="4"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true" 
-    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
-   [globalFilterFields]="[
+  <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="Banco" dataKey="id" [rows]="10"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[ 5, 10, 25, 50]" [paginator]="true"
+    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros" [globalFilterFields]="[
    'idBancos',
    'nombreBancos',
    'descBancos',
    'estadoBancos',
    'fechaBancos',
    'idUsuarioBancos'
-      ]"
-    [tableStyle]="{ 'min-width': '75rem' }">
+      ]" [tableStyle]="{ 'min-width': '75rem' }">
     <ng-template pTemplate="caption">
       <div class="flex justify-content-between">
         <span class="p-input-icon-left mb-2 md:mb-0">
@@ -211,7 +208,11 @@
           <input pInputText type="search" (input)="dtc2.filterGlobal(getEventValue($event),'contains')"
             placeholder="Buscar" />
         </span>
+        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2" style="margin-left: 50px;"
+          data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+
       </div>
+
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -227,13 +228,14 @@
         <th>Estado
           <p-columnFilter type="text" field="estadoBancos" display="menu"></p-columnFilter>
         </th>
-       
+
         <th>Fecha
           <p-columnFilter type="text" field="fechaBancos" display="menu"></p-columnFilter>
         </th>
         <th>ID Usuario
           <p-columnFilter type="text" field="idUsuarioBancos" display="menu"></p-columnFilter>
         </th>
+        <th>Eliminar</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-bancos let-rowIndex="rowIndex">
@@ -245,6 +247,8 @@
         <td> {{ bancos.estadoBancos }}</td>
         <td> {{ bancos.fechaBancos| date:'short'}}</td>
         <td>{{ bancos.idUsuarioBancos}}</td>
+        <td><button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            style="background-color: rgb(196, 8, 8);" (click)="eliminarBancoss(bancos.idBancos)"></button></td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -253,17 +257,81 @@
       </tr>
     </ng-template>
   </p-table>
-</div> 
-<br><br> 
+</div>
+<br><br>
 
+<!-- <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()" style="margin-left: 50px;"></button> -->
 
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Agregar
+ </button> -->
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos Banco</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="BancoForm.reset()"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" [formGroup]="BancoForm" (ngSubmit)=" agregarBancos(); BancoForm.reset()">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Nombre</span>
+              <input type="text" formControlName="nombreBancos" name="nombreBancos"
+                placeholder="nombre del tipo concepto" required>
+              <div class="text-danger"
+                *ngIf="BancoForm.get('nombreBancos')?.hasError('required') && BancoForm.get('nombreBancos')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Descripción:</span>
+              <input type="text" formControlName="descBancos" name="descBancos" placeholder="Descripción tipo concepto"
+                required>
+              <div class="text-danger"
+                *ngIf="BancoForm.get('descBancos')?.hasError('required') && BancoForm.get('descBancos')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Estado</span>
+              <input type="text" formControlName="estadoBancos" name="estadoBancos" placeholder="id unidad tc" required>
+              <div class="text-danger"
+                *ngIf="BancoForm.get('estadoBancos')?.hasError('required') && BancoForm.get('estadoBancos')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Fecha</span>
+              <input type="datetime-local" formControlName="fechaBancos" name="fechaBancos" placeholder="Partida nc"
+                required>
+              <div class="text-danger"
+                *ngIf="BancoForm.get('fechaBancos')?.hasError('required') && BancoForm.get('fechaBancos')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">ID Usuario</span>
+              <input type="number" formControlName="idUsuarioBancos" name="idUsuarioBancos" placeholder="id_usuario"
+                required>
+              <div class="text-danger"
+                *ngIf="BancoForm.get('idUsuarioBancos')?.hasError('required') && BancoForm.get('idUsuarioBancos')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
 
+            <div class="modal-footer">
+              
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="BancoForm.reset()">Cerrar</button>
+              <button style="margin-left: 9px; background-color: rgb(33, 162, 7);" type="submit"
+                class="btn btn-secondary " (click)="openNew()">Guardar</button>
 
-
- 
-
-
-
-
-
+            </div>
+          </div>
+        </form>
+  
+  </div>
+</div>

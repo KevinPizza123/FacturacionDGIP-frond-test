@@ -1,3 +1,7 @@
+export interface CentroCostoModel {
+    listado: CentroCosto[];
+  }
+
 export interface CentroCosto {
     idCentroCosto: number;
     codCentroCosto: string;
@@ -7,7 +11,6 @@ export interface CentroCosto {
     fechaCentroCosto: number;
     idUsuarioCentroCosto: number;
 }
-
 
 
 

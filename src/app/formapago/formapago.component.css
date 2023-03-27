@@ -93,3 +93,58 @@
   
   }
   
+  /* Estilos para el cuerpo del formulario */
+.user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.input-box {
+  flex-basis: calc(50% - 20px);
+  margin-bottom: 20px;
+}
+
+.input-box:last-child {
+  flex-basis: 100%;
+}
+
+.details {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"] {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Estilos para los mensajes de error */
+.text-danger {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Estilos para el botón de enviar */
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}

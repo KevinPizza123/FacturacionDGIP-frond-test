@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BancosService } from '../services/bancos.service';
 import { MenuItem } from 'primeng/api';
-import { Table } from 'primeng/table';
-import * as XLSX from 'xlsx';
 import {BancoDto } from '../Dto/Bancos.dto';
  import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bancos',
@@ -16,23 +15,21 @@ items: MenuItem[] = [];
 activeItem!: MenuItem;
 activeItem2!: MenuItem;
 
-  // BancoForm: FormGroup;
+   BancoForm: FormGroup;
   Banco: BancoDto[] = []; //poner
-  router: any;
+  
 
-  constructor(private BancoService: BancosService, private form: FormBuilder,) {
-    // {
-    //   this.BancoForm = this.form.group({
-    //     nombreBancos: ['', Validators.required],
-    //     descBancos: ['', Validators.required],
-    //      estadoBancos: ['', Validators.required],
-    //     fechaBancos: ['', Validators.required],
-    //     fechaTc: ['', Validators.required],
-    //    idUsuarioBancos: ['', Validators.required],
+  constructor(private BancoService: BancosService, private form: FormBuilder, private router:Router) {
+     {
+       this.BancoForm = this.form.group({
+        nombreBancos: ['', Validators.required],
+        descBancos: ['', Validators.required],
+        estadoBancos: ['', Validators.required],
+       fechaBancos: ['', Validators.required],
+      idUsuarioBancos: ['', Validators.required],
 
-    //   })
-    // }
-
+     })
+   }
 
 
   }
@@ -48,39 +45,38 @@ getListaBanco() {
   }
 
 
-  // agregarBancos() {
-  //   const list: any = {
-  //     nombreBancos: this.TipoconceptoForm.get('nombreBancos')?.value,
-  //     descTipoConcepto: this.TipoconceptoForm.get('descTipoConcepto')?.value,
-  //     idUnidadTc: this.TipoconceptoForm.get('idUnidadTc')?.value,
-  //     prtidaNc: this.TipoconceptoForm.get('prtidaNc')?.value,
-  //     fechaTc: this.TipoconceptoForm.get('fechaTc')?.value,
-  //     idUsuarioTc: this.TipoconceptoForm.get('idUsuarioTc')?.value,
-  //     idTipoConcepto: 0
-  //   }
-  //   this.tipoconceptoService.createTipoConcepto(list).subscribe(data => {
-  //   })
-  //   this.getTipoConcepto()
-  // }
+   agregarBancos() {
+     const list: any = {
+       nombreBancos: this.BancoForm.get('nombreBancos')?.value,
+       descBancos: this.BancoForm.get('descBancos')?.value,
+       estadoBancos: this.BancoForm.get('estadoBancos')?.value,
+       fechaBancos: this.BancoForm.get('fechaBancos')?.value,
+       idUsuarioBancos: this.BancoForm.get('idUsuarioBancos')?.value,
+       idBancos: 0
+     }
+     this.BancoService.createBanco(list).subscribe(data => {
+      this.getListaBanco()
+     })
+     this.getListaBanco() 
+   }
+
+
+   eliminarBancoss(id: number): void {
+    this.BancoService.eliminarBancos(id).subscribe((data) => {
+      if (data && data) {
+        this.Banco = data;
+      }
+      this.getListaBanco();
+    });
+  } 
 
   getEventValue($event: any): string {
     return $event.target.value;
   }
 
-
- /*name = 'ExcelSheet.xlsx';
-  
-  exportToExcel(): void {
-    let element = document.getElementById('season-tble');
-    const jsonData = XLSX.utils.sheet_to_json(element);
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(jsonData);
-
-    const book: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, worksheet, 'Sheet1');
-
-    XLSX.writeFile(book, this.name);
+  openNew(){
+    this.router.navigate(['bancos']);  
   }
- }*/
-  
+
 
 }

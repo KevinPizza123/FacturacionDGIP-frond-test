@@ -1,4 +1,4 @@
-<form action="#" [formGroup]="TipoconceptoForm" (ngSubmit)=" agregarTipoConcepto()">
+<!-- <form action="#" [formGroup]="TipoconceptoForm" (ngSubmit)=" agregarTipoConcepto()">
   <div class="user-details">
     <div class="input-box">
       <span class="details">Nombre</span>
@@ -53,13 +53,13 @@
 </div>
   </div>
 </form>
+ -->
 
- <div class="container card scalein animation-duration-1000">
+<div class="container card scalein animation-duration-1000">
   <h2>Tipo Concepto</h2>
-  <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="listadoconcepto" dataKey="id" [rows]="4"
+  <p-table class="table__content shadow-6 m-3 surface-card" #dtc2 [value]="listadoconcepto" dataKey="id" [rows]="10"
     [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
-    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
-   [globalFilterFields]="[
+    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros" [globalFilterFields]="[
         'idTipoConcepto',
         'nombreTipoConcepto',
         'descTipoConcepto',
@@ -67,8 +67,7 @@
         'prtidaNc',
         'fechaTc',
         'idUsuarioTc'
-      ]"
-    [tableStyle]="{ 'min-width': '75rem' }">
+      ]" [tableStyle]="{ 'min-width': '75rem' }">
     <ng-template pTemplate="caption">
       <div class="flex justify-content-between">
         <span class="p-input-icon-left mb-2 md:mb-0">
@@ -76,9 +75,13 @@
           <input pInputText type="search" (input)="dtc2.filterGlobal(getEventValue($event),'contains')"
             placeholder="Buscar" />
         </span>
+        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2"
+          style="margin-left: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
       </div>
     </ng-template>
+
     <ng-template pTemplate="header">
+
       <tr>
         <th>ID</th>
         <th>Nombre
@@ -112,7 +115,9 @@
         <td>{{ tipoconcepto.prtidaNc }}</td>
         <td>{{ tipoconcepto.fechaTc| date:'short' }}</td>
         <td>{{ tipoconcepto.idUsuarioTc }}</td>
-        <button (click)="eliminarTipoConcepto(tipoconcepto.idTipoConcepto)">Eliminar</button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+          style="background-color: rgb(196, 8, 8);"
+          (click)="eliminarTipoConcepto(tipoconcepto.idTipoConcepto)"></button>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -121,4 +126,87 @@
       </tr>
     </ng-template>
   </p-table>
-</div> 
+</div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+ Agregar
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos Tipo Concepto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="TipoconceptoForm.reset()"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" id="miForm" [formGroup]="TipoconceptoForm"
+          (ngSubmit)="agregarTipoConcepto(); TipoconceptoForm.reset()">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Nombre</span>
+              <input type="text" formControlName="nombreTipoConcepto" name="nombreTipoConcepto"
+                placeholder="nombre del tipo concepto" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('nombreTipoConcepto')?.hasError('required') && TipoconceptoForm.get('nombreTipoConcepto')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Descripción:</span>
+              <input type="text" formControlName="descTipoConcepto" name="descTipoConcepto"
+                placeholder="Descripción tipo concepto" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('descTipoConcepto')?.hasError('required') && TipoconceptoForm.get('descTipoConcepto')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">idUnidadTc</span>
+              <input type="number" formControlName="idUnidadTc" name="idUnidadTc" placeholder="id unidad tc" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('idUnidadTc')?.hasError('required') && TipoconceptoForm.get('idUnidadTc')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">prtidaNc</span>
+              <input type="number" formControlName="prtidaNc" name="prtidaNc" placeholder="Partida nc" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('prtidaNc')?.hasError('required') && TipoconceptoForm.get('prtidaNc')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">fecha</span>
+              <input type="datetime-local" formControlName="fechaTc" name="fechaTc" placeholder="fechaTc" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('fechaTc')?.hasError('required') && TipoconceptoForm.get('fechaTc')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">idUsuarioTc</span>
+              <input type="number" formControlName="idUsuarioTc" name="idUsuarioTc" placeholder="usuariotc" required>
+              <div class="text-danger"
+                *ngIf="TipoconceptoForm.get('idUsuarioTc')?.hasError('required') && TipoconceptoForm.get('idUsuarioTc')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="mb-3">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="TipoconceptoForm.reset()">Cerrar</button>
+              <button style="margin-left: 9px; background-color: rgb(33, 162, 7);" type="submit"
+                class="btn btn-secondary">Guardar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

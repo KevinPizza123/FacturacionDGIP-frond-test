@@ -10,6 +10,7 @@ import { FormaPagoModel } from '../entities/FormaPago';
 export class FormapagoService {
 
   private apiUrl = 'http://localhost:8080/pago/listaFormaPago';
+  private url = 'http://localhost:8080/pago';
 
   constructor(private http: HttpClient) { }
 
@@ -17,6 +18,10 @@ export class FormapagoService {
     return this.http.get<FormaPagoModel>('http://localhost:8080/pago/listaFormaPago').pipe(
       map(data => data.listado.map(p => new FormaPagoDTO(p)))
     );
+  }
+
+  createFPago(createPago: FormaPagoModel): Observable<any>{
+    return this.http.post(`${this.url}/guardarFormaPago`, createPago);
   }
 
   eliminarFormaPago(id: number): Observable<FormaPagoDTO[]> {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TipoConceptoModel, TipoConcepto } from '../entities/TipoConcepto';
 import { TipoconceptoService } from '../services/tipoconcepto.service';
 import { TipoConceptoDTO } from '../Dto/TipoConcepto.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tipoconcepto',
@@ -16,7 +17,8 @@ export class TipoconceptoComponent implements OnInit {
   TipoconceptoForm: FormGroup;
   listadoconcepto: TipoConceptoDTO[] = []; //poner
 
-  constructor(private tipoconceptoService: TipoconceptoService, private form: FormBuilder,) {
+
+  constructor(private tipoconceptoService: TipoconceptoService, private form: FormBuilder,private router:Router) {
     {
       this.TipoconceptoForm = this.form.group({
         nombreTipoConcepto: ['', Validators.required],
@@ -53,8 +55,10 @@ export class TipoconceptoComponent implements OnInit {
       idTipoConcepto: 0
     }
     this.tipoconceptoService.createTipoConcepto(list).subscribe(data => {
+      this.getTipoConcepto();
     })
-    this.getTipoConcepto()
+    this.getTipoConcepto();
+
   }
 
 
@@ -70,6 +74,15 @@ export class TipoconceptoComponent implements OnInit {
   getEventValue($event: any): string {
     return $event.target.value;
   }
+
+
+  openNew(){
+    this.router.navigate(['tipoconcepto']);
+  }
+
+
+
+
 }
 
 

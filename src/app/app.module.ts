@@ -40,6 +40,7 @@ import { DockModule } from 'primeng/dock';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PickListModule } from 'primeng/picklist';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 import { MenuModule } from 'primeng/menu';
 import { TarjetaComponent } from './tarjeta/tarjeta.component';
@@ -49,6 +50,7 @@ import { TipoconceptoComponent } from './tipoconcepto/tipoconcepto.component';
 import { TipoconsumidorComponent } from './tipoconsumidor/tipoconsumidor.component';
 import { LayoutModule } from './layout/layout.module';
 import { BancosComponent } from './bancos/bancos.component';
+
 import { CentrocostoComponent } from './centrocostos/centrocosto.component';
 
 @NgModule({
@@ -106,7 +108,8 @@ import { CentrocostoComponent } from './centrocostos/centrocosto.component';
     ScrollPanelModule,
     FormsModule,
     LayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DynamicDialogModule
   ],
   providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent],

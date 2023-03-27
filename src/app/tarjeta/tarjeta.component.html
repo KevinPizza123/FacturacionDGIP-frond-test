@@ -60,109 +60,184 @@
   </p-card><br>
 </div> -->
 
-    <div class="container card scalein animation-duration-1000">
-      <h2>Tarjetas</h2>
-      <p-table class="table__content shadow-6 m-3 surface-card" #dt [value]="tarjetas" dataKey="id" [rows]="4"
+<div class="container card scalein animation-duration-1000">
+  <h2>Tarjetas</h2>
+  <p-table class="table__content shadow-6 m-3 surface-card" #dt [value]="listadotarjeta" dataKey="id" [rows]="10"
     [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
     currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
     [globalFilterFields]="['idtarjeta','nombreTarjeta','descTarjeta','stateTarjeta','dateTarjeta','idUsurTarjeta']"
     [tableStyle]="{ 'min-width': '75rem' }">
 
-        <ng-template pTemplate="caption">
-          <div class="flex justify-content-between">
-            <span class="p-input-icon-left mb-2 md:mb-0">
-              <i class="pi pi-search"></i>
-              <input pInputText type="search" (input)="dt.filterGlobal(getEventValue($event),'contains')"
-                placeholder="Buscar" />
-            </span>
-          </div>
-        </ng-template>
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between">
+        <span class="p-input-icon-left mb-2 md:mb-0">
+          <i class="pi pi-search"></i>
+          <input pInputText type="search" (input)="dt.filterGlobal(getEventValue($event),'contains')"
+            placeholder="Buscar" />
+        </span>
+        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2"  style="margin-left: 50px;" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+      </div>
+    </ng-template>
 
-        <ng-template pTemplate="header">
-          <tr>
-            <th>ID<p-columnFilter type="text" field="idTarjeta" display="menu"></p-columnFilter></th>
-            <th>Nombre<p-columnFilter type="text" field="nombreTarjeta" display="menu"></p-columnFilter>
-            <th>Descripción<p-columnFilter type="text" field="descTarjeta" display="menu"></p-columnFilter></th>
-            <th>Estado<p-columnFilter type="text" field="stateTarjeta" display="menu"></p-columnFilter></th>
-            <th>Fecha<p-columnFilter type="text" field="dateTarjeta" display="menu"></p-columnFilter></th>
-            <th>ID Usuario<p-columnFilter type="text" field="idUsurTarjeta" display="menu"></p-columnFilter></th>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID<p-columnFilter type="text" field="idTarjeta" display="menu"></p-columnFilter></th>
+        <th>Nombre<p-columnFilter type="text" field="nombreTarjeta" display="menu"></p-columnFilter>
+        <th>Descripción<p-columnFilter type="text" field="descTarjeta" display="menu"></p-columnFilter></th>
+        <th>Estado<p-columnFilter type="text" field="stateTarjeta" display="menu"></p-columnFilter></th>
+        <th>Fecha<p-columnFilter type="text" field="dateTarjeta" display="menu"></p-columnFilter></th>
+        <th>ID Usuario<p-columnFilter type="text" field="idUsurTarjeta" display="menu"></p-columnFilter></th>
+        <th>Eliminar</th>
 
-          </tr>
-          <!-- <tr>
-                  <th><p-columnFilter type="text" field="nombreTarjeta"></p-columnFilter></th>
-                  <th><p-columnFilter type="text" field="descTarjeta"></p-columnFilter></th>
-                  <th><p-columnFilter type="text" field="stateTarjeta"></p-columnFilter></th>
-                  <th><p-columnFilter type="text" field="dateTarjeta"></p-columnFilter></th>
-                  <th><p-columnFilter type="text" field="idUsurTarjeta"></p-columnFilter></th>
-              </tr> -->
-        </ng-template>
+      </tr>
+      <!-- <tr>
+              <th><p-columnFilter type="text" field="nombreTarjeta"></p-columnFilter></th>
+              <th><p-columnFilter type="text" field="descTarjeta"></p-columnFilter></th>
+              <th><p-columnFilter type="text" field="stateTarjeta"></p-columnFilter></th>
+              <th><p-columnFilter type="text" field="dateTarjeta"></p-columnFilter></th>
+              <th><p-columnFilter type="text" field="idUsurTarjeta"></p-columnFilter></th>
+          </tr> -->
+    </ng-template>
 
 
-        <ng-template pTemplate="body" let-tarjeta>
-          <tr class="tablas">
-            <td>{{ tarjeta.idTarjeta }}</td>
-            <td>{{ tarjeta.nombreTarjeta }}</td>
-            <td>{{ tarjeta.descTarjeta }}</td>
-            <td>{{ tarjeta.stateTarjeta }}</td>
-            <td>{{ tarjeta.dateTarjeta | date:'short' }}</td>
-            <td>{{ tarjeta.idUsurTarjeta }}</td>
-          </tr>
-        </ng-template>
+    <ng-template pTemplate="body" let-tarjeta>
+      <tr class="tablas">
+        <td>{{ tarjeta.idTarjeta }}</td>
+        <td>{{ tarjeta.nombreTarjeta }}</td>
+        <td>{{ tarjeta.descTarjeta }}</td>
+        <td>{{ tarjeta.stateTarjeta }}</td>
+        <td>{{ tarjeta.dateTarjeta | date:'short' }}</td>
+        <td>{{ tarjeta.idUsurTarjeta }}</td>
+        <td><button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            style="background-color: rgb(196, 8, 8);" (click)="eliminarTarjeta(tarjeta.idTarjeta)"></button></td>
+      </tr>
+    </ng-template>
 
-        <ng-template pTemplate="summary">
-          <div class="p-d-flex p-ai-center p-jc-between">
-            En total hay {{tarjetas ? tarjetas.length : 0 }} entradas.
-          </div>
-        </ng-template>
-      </p-table>
-    </div>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        En total hay {{listadotarjeta ? listadotarjeta.length : 0 }} entradas.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
 <!-- <section class="footer-section">
-  <div class="center-div">
-      <p class="font-weight-bold">Copyright 2023</p>
-  </div>
+<div class="center-div">
+  <p class="font-weight-bold">Copyright 2023</p>
+</div>
 </section> -->
 
 <!-- 
 <div class="container card scalein animation-duration-1000">
-  <h2>REGISTROS</h2>
-  <p-table class="table__content shadow-6 m-3 surface-card" #dt [value]="consumidor" dataKey="id" [rows]="4"
-    [showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
-    currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
-        [globalFilterFields]="['idtarjeta','nombreTarjeta','descTarjeta','stateTarjeta','dateTarjeta','idUsurTarjeta']"
-    [tableStyle]="{ 'min-width': '75rem' }">
-    
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripción
-          <p-columnFilter type="text" field="descTconsumidor" display="menu"></p-columnFilter>
-        </th>
-        <th>Estado
-          <p-columnFilter type="text" field="estadoTconsumidor" display="menu"></p-columnFilter>
-        </th>
-        <th>Fecha
-          <p-columnFilter type="text" field="fechaTconsumidor" display="menu"></p-columnFilter>
-        </th>
-        <th>ID Usuario</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-consumidor let-rowIndex="rowIndex">
+<h2>REGISTROS</h2>
+<p-table class="table__content shadow-6 m-3 surface-card" #dt [value]="consumidor" dataKey="id" [rows]="4"
+[showCurrentPageReport]="true" [rowsPerPageOptions]="[2, 5, 10, 25, 50]" [paginator]="true"
+currentPageReportTemplate="Datos {first} a {last} de {totalRecords} registros"
+    [globalFilterFields]="['idtarjeta','nombreTarjeta','descTarjeta','stateTarjeta','dateTarjeta','idUsurTarjeta']"
+[tableStyle]="{ 'min-width': '75rem' }">
 
-      <tr>
-        <td>{{ consumidor.idTipoConsumidor }}
-        </td>
-        <td>{{ consumidor.nombreTconsumidor }}</td>
-        <td>{{ consumidor.descTconsumidor }}</td>
-        <td>{{ consumidor.estadoTconsumidor }}</td>
-        <td>{{ consumidor.fechaTconsumidor }}</td>
-        <td>{{ consumidor.idUsuarioTconsumidor }}</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="5">No se han encontrado resultados</td>
-      </tr>
-    </ng-template>
-  </p-table>
+<ng-template pTemplate="header">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Descripción
+      <p-columnFilter type="text" field="descTconsumidor" display="menu"></p-columnFilter>
+    </th>
+    <th>Estado
+      <p-columnFilter type="text" field="estadoTconsumidor" display="menu"></p-columnFilter>
+    </th>
+    <th>Fecha
+      <p-columnFilter type="text" field="fechaTconsumidor" display="menu"></p-columnFilter>
+    </th>
+    <th>ID Usuario</th>
+  </tr>
+</ng-template>
+<ng-template pTemplate="body" let-consumidor let-rowIndex="rowIndex">
+
+  <tr>
+    <td>{{ consumidor.idTipoConsumidor }}
+    </td>
+    <td>{{ consumidor.nombreTconsumidor }}</td>
+    <td>{{ consumidor.descTconsumidor }}</td>
+    <td>{{ consumidor.estadoTconsumidor }}</td>
+    <td>{{ consumidor.fechaTconsumidor }}</td>
+    <td>{{ consumidor.idUsuarioTconsumidor }}</td>
+  </tr>
+</ng-template>
+<ng-template pTemplate="emptymessage">
+  <tr>
+    <td colspan="5">No se han encontrado resultados</td>
+  </tr>
+</ng-template>
+</p-table>
 </div> -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Datos Tarjeta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="TarjetaForm.reset()"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" [formGroup]="TarjetaForm" (ngSubmit)="agregarTarjeta(); TarjetaForm.reset()">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Nombre</span>
+              <input type="text" formControlName="nombreTarjeta" name="nombreTarjeta" placeholder="nombre de la tarjeta"
+                required>
+              <div class="text-danger"
+                *ngIf="TarjetaForm.get('nombreTarjeta')?.hasError('required') && TarjetaForm.get('nombreTarjeta')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Descripción:</span>
+              <input type="text" formControlName="descTarjeta" name="descTarjeta" placeholder="Descripción tarjeta" required>
+              <div class="text-danger"
+                *ngIf="TarjetaForm.get('descTarjeta')?.hasError('required') && TarjetaForm.get('descTarjeta')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Estado </span>
+              <input type="text" formControlName="stateTarjeta" name="stateTarjeta" placeholder="estado" required>
+              <div class="text-danger"
+                *ngIf="TarjetaForm.get('stateTarjeta')?.hasError('required') && TarjetaForm.get('stateTarjeta')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">Fecha</span>
+              <input type="datetime-local" formControlName="dateTarjeta" name="dateTarjeta" placeholder="Partida nc" required>
+              <div class="text-danger"
+                *ngIf="TarjetaForm.get('dateTarjeta')?.hasError('required') && TarjetaForm.get(' dateTarjeta')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+            <div class="input-box">
+              <span class="details">ID Usuario</span>
+              <input type="text" formControlName="idUsurTarjeta" name="idUsurTarjeta" placeholder="Id" required>
+              <div class="text-danger"
+                *ngIf="TarjetaForm.get('idUsurTarjeta')?.hasError('required') && TarjetaForm.get('idUsurTarjeta')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="TarjetaForm.reset()">Cerrar</button>
+              <button style="margin-left: 9px; background-color: rgb(33, 162, 7);" type="submit"
+                class="btn btn-secondary " >Guardar</button>
+              
+            </div>
+          </div>
+        </form>
+</div>
+</div>
+</div>
+</div>
+
+
+
+

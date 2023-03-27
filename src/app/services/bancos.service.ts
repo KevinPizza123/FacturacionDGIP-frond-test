@@ -23,11 +23,15 @@ export class BancosService {
    }
 
    createBanco(createBanco: BancosModel): Observable<any>{
-    return this.http.post(`${this.api}/guardarConcepto`, createBanco);
+    return this.http.post(`${this.api}/guardarBancos`, createBanco);
   }
 
+  eliminarBancos(id: number): Observable<BancoDto[]> {
+    return this.http.delete<BancosModel>('http://localhost:8080/bancos/eliminarBancos/' + id ).pipe(
+      map(data => data.listado)
+    );
+  }
 
- 
 
   }
 
