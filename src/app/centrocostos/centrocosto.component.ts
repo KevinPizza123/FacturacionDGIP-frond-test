@@ -13,10 +13,10 @@ export class CentrocostoComponent implements OnInit {
   centrocosto: CentroCostoDto[] = [];
 
   CentrocostoForm: FormGroup
- 
 
 
-  constructor(private centroCostoService: CentroCostoService, private form: FormBuilder, private router:Router) {
+
+  constructor(private centroCostoService: CentroCostoService, private form: FormBuilder, private router: Router) {
 
     {
       this.CentrocostoForm = this.form.group({
@@ -25,15 +25,13 @@ export class CentrocostoComponent implements OnInit {
         descCentroCosto: ['', Validators.required],
         estadoCentroCosto: ['', Validators.required],
         fechaCentroCosto: ['', Validators.required],
-        fechaFp: ['', Validators.required],
         idUsuarioCentroCosto: ['', Validators.required],
-
-    })
+      })
+    }
   }
-  }
 
 
-  
+
 
 
   ngOnInit(): void {
@@ -42,7 +40,7 @@ export class CentrocostoComponent implements OnInit {
     this.getCentroCosto();
 
 
-  
+
   }
 
   getCentroCosto() {
@@ -63,9 +61,9 @@ export class CentrocostoComponent implements OnInit {
       idCentroCosto: 0,
     }
     this.centroCostoService.createCentroCosto(list).subscribe(data => {
-     this.getCentroCosto()
+      this.getCentroCosto()
     })
-    this.getCentroCosto() 
+    this.getCentroCosto()
 
   }
 
@@ -84,8 +82,8 @@ export class CentrocostoComponent implements OnInit {
     return $event.target.value;
   }
 
-  openNew(){
-    this.router.navigate(['centroCosto']);  
+  openNew() {
+    this.router.navigate(['centroCosto']);
   }
 
 }

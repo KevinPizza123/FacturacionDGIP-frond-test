@@ -75,11 +75,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Datos Centro Costo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="CentrocostoForm.reset()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="CentrocostoForm.reset()"></button>
       </div>
       <div class="modal-body">
         <form action="#" [formGroup]="CentrocostoForm" (ngSubmit)=" agregarCentroCosto(); CentrocostoForm.reset()">
           <div class="user-details">
+            <div class="input-box">
+              <span class="details">codCentroCosto</span>
+              <input type="text" formControlName="codCentroCosto" name="codCentroCosto"
+                placeholder="nombre del tipo concepto" required>
+              <div class="text-danger"
+                *ngIf="CentrocostoForm.get('codCentroCosto')?.hasError('required') && CentrocostoForm.get('codCentroCosto')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
             <div class="input-box">
               <span class="details">Nombre</span>
               <input type="text" formControlName="nombreCentroCosto" name="nombreCentroCosto"
@@ -94,16 +104,16 @@
               <input type="text" formControlName="descCentroCosto" name="descCentroCosto"
                 placeholder="Descripción tipo concepto" required>
               <div class="text-danger"
-                *ngIf="CentrocostoForm.get('descCentroCosto')?.hasError('required') && CentrocostoForm.get('descBancos')?.touched">
+                *ngIf="CentrocostoForm.get('descCentroCosto')?.hasError('required') && CentrocostoForm.get('descCentroCosto')?.touched">
                 <span>Este campo es <strong>obligatorio</strong></span>
               </div>
             </div>
             <div class="input-box">
               <span class="details">Estado</span>
-              <input type="text" formControlName=" estadoCentroCosto" name=" estadoCentroCosto"
+              <input type="text" formControlName="estadoCentroCosto" name=" estadoCentroCosto"
                 placeholder="id unidad tc" required>
               <div class="text-danger"
-                *ngIf="CentrocostoForm.get(' estadoCentroCosto')?.hasError('required') && CentrocostoForm.get(' estadoCentroCosto')?.touched">
+                *ngIf="CentrocostoForm.get('estadoCentroCosto')?.hasError('required') && CentrocostoForm.get('estadoCentroCosto')?.touched">
                 <span>Este campo es <strong>obligatorio</strong></span>
               </div>
             </div>
@@ -116,11 +126,21 @@
                 <span>Este campo es <strong>obligatorio</strong></span>
               </div>
             </div>
+            <div class="input-box">
+              <span class="details">idUsuarioCentroCosto</span>
+              <input type="number" formControlName="idUsuarioCentroCosto" name="idUsuarioCentroCosto"
+                placeholder="Partida nc" required>
+              <div class="text-danger"
+                *ngIf="CentrocostoForm.get('idUsuarioCentroCosto')?.hasError('required') && CentrocostoForm.get('idUsuarioCentroCosto')?.touched">
+                <span>Este campo es <strong>obligatorio</strong></span>
+              </div>
+            </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="CentrocostoForm.reset()">Cerrar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                (click)="CentrocostoForm.reset()">Cerrar</button>
               <button style="margin-left: 9px; background-color: rgb(33, 162, 7);" type="submit"
-                class="btn btn-secondary " (click)="openNew(); CentrocostoForm.reset()">Guardar</button>
+                class="btn btn-secondary ">Guardar</button>
             </div>
           </div>
         </form>

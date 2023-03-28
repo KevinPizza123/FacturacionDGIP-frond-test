@@ -1,9 +1,8 @@
-
-
 .tablas {
   transition: 0.4s ease;
 
 }
+
 .tablas-header {
   font-weight: bold;
 }
@@ -104,6 +103,11 @@ input[type="search"] {
 
 
 }
+
+.container.card.scalein.animation-duration-1000 {
+  border: none;
+}
+
 tr {
   background: white;
 }
@@ -112,6 +116,7 @@ tr:hover {
   background: rgba(24, 77, 158, 0.466);
   color: #0f0f0f;
 }
+
 /* Estilos para el cuerpo del formulario */
 .user-details {
   display: flex;

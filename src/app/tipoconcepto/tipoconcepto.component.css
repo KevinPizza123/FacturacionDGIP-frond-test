@@ -48,10 +48,15 @@
 
 .table__content {
   width: 90%;
+  border: none;
   border-radius: 9px;
   background: linear-gradient(145deg, #d2d2d2, #b0b0b0);
   box-shadow: 8px 8px 16px #525252,
     -8px -8px 16px #ffffff;
+}
+
+.container.card.scalein.animation-duration-1000 {
+  border: none;
 }
 
 tr {
@@ -91,7 +96,8 @@ input[type="search"] {
   }
 
 
-} 
+}
+
 /* Estilos para el cuerpo del formulario */
 .user-details {
   display: flex;
